@@ -12,8 +12,15 @@ on:
   workflow_dispatch: # allows you to trigger manually
 
 jobs:
-  build:
+  build-images:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ["base"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,3 +32,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install invoke
+
+      - name: Build images
+        run: |
+          invoke images.build --name ${{ matrix.image }}
