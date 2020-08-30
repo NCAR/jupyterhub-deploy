@@ -30,9 +30,34 @@ def create(
 
     command = (
         f'k3d cluster create {name} --api-port {api_port} '
-        f'--servers {servers} --agents {agents} --port {port} --wait'
+        f'--servers {servers} --agents {agents} --port {port} '
+        '--k3s-server-arg "--no-deploy=traefik" --wait'
     )
 
+    _print_command(command)
+    if _prompt():
+        c.run(command)
+
+
+@task
+def install_dashboard(c):
+    """Install kubernetes-dashboard"""
+    command = (
+        'arkade install kubernetes-dashboard --wait '
+        '&& kubectl apply -f k8s/dashboard'
+    )
+    _print_command(command)
+    if _prompt():
+        c.run(command)
+
+
+@task
+def dashboard_token(c):
+    """Get token for loggin in."""
+    command = (
+        'kubectl -n kubernetes-dashboard describe secret '
+        "$(kubectl -n kubernetes-dashboard get secret | grep admin-user-token | awk '{print $1}')"
+    )
     _print_command(command)
     if _prompt():
         c.run(command)
