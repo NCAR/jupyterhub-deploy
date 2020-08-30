@@ -1,6 +1,5 @@
 from invoke import Collection
 
-import cluster
-import images
+from scripts import cluster, dashboard, images
 
-namespace = Collection(images, cluster)
+namespace = Collection(images, cluster, dashboard)

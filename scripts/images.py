@@ -10,6 +10,7 @@ images = {'base': 'jupyterhub-base'}
     }
 )
 def build(c, name=None):
+    """Build docker images."""
     if name is not None and name in images:
         image = images[name]
         command = f'cd {image} && docker build -t {image} .'
