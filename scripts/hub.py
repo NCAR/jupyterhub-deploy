@@ -9,7 +9,7 @@ def install(
 ):
     """Install JupyterHub Helm chart."""
     command = (
-        'helm repo add jupyterhub jupyterhub https://jupyterhub.github.io/helm-chart/ &&  '
+        'helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/ &&  '
         'helm repo update && '
         f'helm upgrade --install {release} jupyterhub/jupyterhub '
         f'--namespace {namespace} --version {version} --values {values} --wait'
