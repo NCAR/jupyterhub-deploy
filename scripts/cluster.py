@@ -23,6 +23,6 @@ def create(
         '--k3s-server-arg "--no-deploy=traefik" --wait'
     )
 
-    _print_command(command)
+    _print_command('Create a Kubernetes cluster', command)
     if _prompt():
         c.run(command)
