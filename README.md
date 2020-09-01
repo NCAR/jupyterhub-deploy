@@ -6,17 +6,23 @@
 **Table of Contents**
 
 - [NCAR JupyterHub Deployment](#ncar-jupyterhub-deployment)
-  - [Requirements](#requirements)
+  - [Dependencies](#dependencies)
   - [Usage](#usage)
 
 [K3d](https://github.com/rancher/k3d/) Deployment of NCAR Jupyterhub. This deployment is inspired by and adapted from [NERSC JupyterHub Deployment](https://github.com/NERSC/jupyterhub-deploy).
 
 > k3d is a lightweight wrapper to run k3s (Rancher Lab’s minimal Kubernetes distribution) in docker. -- [k3d.io](https://k3d.io/)
 
-## Requirements
+## Dependencies
+
+- arkade
+- invoke
+- colorama
 
 ```bash
 python -m pip install -r requirements.txt
+# Note: you can also run without `sudo` and move the binary yourself
+curl -sLS https://dl.get-arkade.dev | sudo sh
 ```
 
 ## Usage
@@ -29,6 +35,7 @@ Available tasks:
   dashboard.install   Install kubernetes-dashboard
   dashboard.proxy     Forward the dashboard to the local machine
   dashboard.token     Get token for loggin in.
+  dep.install         Install required CLI applications for working with Kubernetes.
   hub.install         Install JupyterHub Helm chart.
   images.build        Build docker images.
 ```
