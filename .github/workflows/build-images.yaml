@@ -6,12 +6,14 @@ on:
       - "*"
     paths:
       - "images/**"
+      - ".github/workflows/*"
 
   pull_request:
     branches:
       - "*"
     paths:
       - "images/**"
+      - ".github/workflows/*"
 
   workflow_dispatch: # allows you to trigger manually
 
