@@ -1,6 +1,6 @@
 # NCAR JupyterHub Deployment
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NCAR/jupyterhub-deploy/CI?logo=docker&style=for-the-badge)](<[df](https://github.com/NCAR/jupyterhub-deploy/actions?query=workflow%3ACI)>)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NCAR/jupyterhub-deploy/docker-images-build?logo=docker&style=for-the-badge)](https://github.com/NCAR/jupyterhub-deploy/actions?query=workflow%3Adocker-images-build)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/NCAR/jupyterhub-deploy/linting?label=linting&logo=github&style=for-the-badge)](https://github.com/NCAR/jupyterhub-deploy/actions?query=workflow%3Alinting)
 
 **Table of Contents**

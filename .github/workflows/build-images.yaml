@@ -1,13 +1,17 @@
-name: CI
+name: docker-images-build
 
 on:
   push:
     branches:
       - "*"
+    paths:
+      - "images/*"
 
   pull_request:
     branches:
       - "*"
+    paths:
+      - "images/*"
 
   workflow_dispatch: # allows you to trigger manually
 
@@ -20,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image: ["base"]
+        image: ["hub"]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,3 +40,16 @@ jobs:
       - name: Build images
         run: |
           invoke images.build --name ${{ matrix.image }}
+
+      - name: List images
+        run: |
+          docker ps -a
+          docker images
+
+      - name: Publish images to DockerHub Registry
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ${{ matrix.image }}:latest
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
