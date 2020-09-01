@@ -5,13 +5,13 @@ on:
     branches:
       - "*"
     paths:
-      - "images/*"
+      - "images/**"
 
   pull_request:
     branches:
       - "*"
     paths:
-      - "images/*"
+      - "images/**"
 
   workflow_dispatch: # allows you to trigger manually
 
