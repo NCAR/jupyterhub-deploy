@@ -20,9 +20,18 @@ def create(
     command = (
         f'k3d cluster create {name} --api-port {api_port} '
         f'--servers {servers} --agents {agents} --port {port} '
-        '--k3s-server-arg "--no-deploy=traefik" --wait'
+        '--k3s-server-arg "--disable=traefik" --wait'
     )
 
     _print_command('Create a Kubernetes cluster', command)
+    if _prompt():
+        c.run(command)
+
+
+@task
+def delete(c, name='jhub'):
+    'Delete kubernetes cluster.'
+    command = f'k3d cluster delete {name}'
+    _print_command('Delete kubernetes cluster', command)
     if _prompt():
         c.run(command)

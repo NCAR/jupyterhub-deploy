@@ -9,6 +9,7 @@ def install(
 ):
     """Install JupyterHub Helm chart."""
     command = (
+        f'kubectl create namespace {namespace} && '
         'helm repo add jupyterhub https://jupyterhub.github.io/helm-chart/ &&  '
         'helm repo update && '
         f'helm upgrade --install {release} jupyterhub/jupyterhub '
@@ -26,5 +27,14 @@ def install(
 
     command = f'kubectl get service --namespace {namespace}'
     _print_command('Find IP and port of the JupyterHub proxy-public service', command)
+    if _prompt():
+        c.run(command)
+
+
+@task
+def delete(c, namespace='jhub', release='jhub'):
+    'Delete JupyterHub install.'
+    command = f'helm delete {release} && kubectl delete namespace {namespace}'
+    _print_command('Delete JupyterHub install', command)
     if _prompt():
         c.run(command)
