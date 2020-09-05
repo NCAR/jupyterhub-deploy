@@ -15,12 +15,20 @@
 
 ## Dependencies
 
-- arkade
+- docker
+- arkade: https://github.com/alexellis/arkade
 - invoke
 - colorama
 
+Install (invoke, colorama) requirements:
+
 ```bash
 python -m pip install -r requirements.txt
+```
+
+Install arkade:
+
+```bash
 # Note: you can also run without `sudo` and move the binary yourself
 curl -sLS https://dl.get-arkade.dev | sudo sh
 ```
@@ -32,10 +40,12 @@ $ invoke --list
 Available tasks:
 
   cluster.create      Create a Kubernetes cluster.
+  cluster.delete      Delete kubernetes cluster.
   dashboard.install   Install kubernetes-dashboard
   dashboard.proxy     Forward the dashboard to the local machine
   dashboard.token     Get token for loggin in.
   dep.install         Install required CLI applications for working with Kubernetes.
+  hub.delete          Delete JupyterHub install.
   hub.install         Install JupyterHub Helm chart.
   images.build        Build docker images.
 ```
