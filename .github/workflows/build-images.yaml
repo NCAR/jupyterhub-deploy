@@ -31,25 +31,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: |
-          python -m pip install -r requirements.txt
-
-      - name: Build images
-        run: |
-          invoke images.build --name ${{ matrix.image }}
-
-      - name: List images
-        run: |
-          docker ps -a
-          docker images
-
       - name: Publish images to DockerHub Registry
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push ncarxdev/${{ matrix.image }}:latest
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: ncarxdev/${{ matrix.image }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          dockerfile: images/${{ matrix.image }}/Dockerfile
+          tags: "latest"
+          tag_names: true
