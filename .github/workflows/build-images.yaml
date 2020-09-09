@@ -44,4 +44,3 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           dockerfile: images/${{ matrix.image }}/Dockerfile
           tags: "latest,${{ env.RELEASE_VERSION }}"
-          tag_names: true
