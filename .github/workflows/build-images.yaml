@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Publish images to DockerHub Registry
-        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/master' #&& github.event_name == 'push'
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: ncarxdev/${{ matrix.image }}
