@@ -38,3 +38,15 @@ def delete(c, namespace='jhub', release='jhub'):
     _print_command('Delete JupyterHub install', command)
     if _prompt():
         c.run(command)
+
+
+@task
+def upgrade(c, release='jhub', version='0.9.0', values='hub/config.yaml'):
+    """Apply changes to the hub deployment."""
+    command = (
+        f'helm upgrade --cleanup-on-fail {release} jupyterhub/jupyterhub '
+        f'--version {version} --values {values}'
+    )
+    _print_command('Upgrade JupyterHub deployment', command)
+    if _prompt():
+        c.run(command)

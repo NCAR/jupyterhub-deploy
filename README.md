@@ -19,6 +19,7 @@
 - arkade: https://github.com/alexellis/arkade
 - invoke
 - colorama
+- k9s (Optional): https://github.com/derailed/k9s
 
 Install (invoke, colorama) requirements:
 
@@ -47,5 +48,6 @@ Available tasks:
   dep.install         Install required CLI applications for working with Kubernetes.
   hub.delete          Delete JupyterHub install.
   hub.install         Install JupyterHub Helm chart.
+  hub.upgrade         Apply changes to the hub deployment.
   images.build        Build docker images.
 ```
