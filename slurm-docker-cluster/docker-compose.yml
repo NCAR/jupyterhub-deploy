@@ -1,0 +1,85 @@
+version: "3.1"
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    hostname: mysql.local.dev
+    container_name: mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+      MYSQL_DATABASE: slurm_acct_db
+      MYSQL_USER: slurm
+      MYSQL_PASSWORD: password
+    volumes:
+      - var_lib_mysql:/var/lib/mysql
+
+  slurmdbd:
+    image: ncarxdev/slurm.base:20.02.5.1
+    restart: always
+    command: ["slurmdbd"]
+    container_name: slurmdbd
+    hostname: slurmdbd.local.dev
+    volumes:
+      - etc_munge:/etc/munge
+      - etc_slurm:/etc/slurm
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6819"
+    depends_on:
+      - mysql
+
+  slurmctld:
+    image: ncarxdev/slurm.base:20.02.5.1
+    restart: always
+    command: ["slurmctld"]
+    container_name: slurmctld
+    hostname: slurmctld.local.dev
+    volumes:
+      - etc_munge:/etc/munge
+      - etc_slurm:/etc/slurm
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6817"
+    depends_on:
+      - "slurmdbd"
+
+  worker01:
+    image: ncarxdev/slurm.base:20.02.5.1
+    restart: always
+    command: ["slurmd"]
+    hostname: worker01.local.dev
+    container_name: worker01
+    volumes:
+      - etc_munge:/etc/munge
+      - etc_slurm:/etc/slurm
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
+
+  worker02:
+    image: ncarxdev/slurm.base:20.02.5.1
+    restart: always
+    command: ["slurmd"]
+    hostname: worker02.local.dev
+    container_name: worker02
+    volumes:
+      - etc_munge:/etc/munge
+      - etc_slurm:/etc/slurm
+      - slurm_jobdir:/data
+      - var_log_slurm:/var/log/slurm
+    expose:
+      - "6818"
+    depends_on:
+      - "slurmctld"
+
+volumes:
+  etc_munge:
+  etc_slurm:
+  slurm_jobdir:
+  var_lib_mysql:
+  var_log_slurm:
