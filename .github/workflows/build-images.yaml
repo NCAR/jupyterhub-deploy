@@ -41,7 +41,7 @@ jobs:
 
       - name: Publish images to DockerHub Registry
         if: github.ref == 'refs/heads/master' #&& github.event_name == 'push'
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: ncarxdev/${{ matrix.image }}
           username: ${{ secrets.DOCKER_USERNAME }}
